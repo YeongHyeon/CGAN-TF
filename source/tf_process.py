@@ -55,9 +55,9 @@ def vectorized_condition(batch_size, num_condition):
     cond = np.zeros((batch_size, num_condition))
     checker = 0
     for idx_b in range(batch_size):
+        if(idx_b != 0 and idx_b % unit == 0): checker += 1
         try: cond[idx_b, checker] = 1
         except: pass
-        if(idx_b != 0 and idx_b % unit == 0): checker += 1
 
     return cond
 
