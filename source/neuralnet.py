@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 import source.layers as lay
 
-class GAN(object):
+class CGAN(object):
 
     def __init__(self, \
         height, width, channel, ksize, zdim, num_class, \
@@ -42,8 +42,8 @@ class GAN(object):
                 self.learning_rate*5, name='Adam_g').minimize(\
                 self.losses['loss_g'], var_list=self.variables['params_g'])
 
-        tf.compat.v1.summary.scalar('GAN/loss_d', self.losses['loss_d'])
-        tf.compat.v1.summary.scalar('GAN/loss_g', self.losses['loss_g'])
+        tf.compat.v1.summary.scalar('CGAN/loss_d', self.losses['loss_d'])
+        tf.compat.v1.summary.scalar('CGAN/loss_g', self.losses['loss_g'])
         self.summaries = tf.compat.v1.summary.merge_all()
 
         self.__init_session(path=self.path_ckpt)

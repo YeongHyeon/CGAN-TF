@@ -10,7 +10,7 @@ import source.tf_process as tfp
 def main():
 
     dataset = dman.Dataset(normalize=FLAGS.datnorm)
-    neuralnet = nn.GAN(height=dataset.height, width=dataset.width, channel=dataset.channel, \
+    neuralnet = nn.CGAN(height=dataset.height, width=dataset.width, channel=dataset.channel, \
         ksize=FLAGS.ksize, zdim=FLAGS.zdim, num_class=dataset.num_class, \
         learning_rate=FLAGS.lr, path='Checkpoint')
 
