@@ -57,7 +57,7 @@ def vectorized_condition(batch_size, num_condition):
     for idx_b in range(batch_size):
         try: cond[idx_b, checker] = 1
         except: pass
-        if(idx_b % unit == 0): checker += 1
+        if(idx_b != 0 and idx_b % unit == 0): checker += 1
 
     return cond
 
