@@ -90,11 +90,15 @@ def training(neuralnet, dataset, epochs, batch_size, normalize=True):
     for epoch in range(epochs):
 
         x_tr, y_tr, _ = dataset.next_train(batch_size=test_size, fix=True) # Initial batch
-        y_tr = vectorized_condition(batch_size=test_size, num_condition=neuralnet.num_class)
         z_tr = random_noise(x_tr.shape[0], neuralnet.zdim)
         step_dict = neuralnet.step(x=x_tr, y=y_tr, z=z_tr, training=False)
         x_fake = step_dict['x_fake']
         plt.imsave(os.path.join("training", "from_noise", "%08d.png" %(epoch)), dat2canvas(data=x_fake))
+
+        y_tr = vectorized_condition(batch_size=test_size, num_condition=neuralnet.num_class)
+        step_dict = neuralnet.step(x=x_tr, y=y_tr, z=z_tr, training=False)
+        x_fake = step_dict['x_fake']
+        plt.imsave(os.path.join("training", "from_condition", "%08d.png" %(epoch)), dat2canvas(data=x_fake))
 
         if(neuralnet.zdim == 2):
             for checker in range(neuralnet.num_class):
