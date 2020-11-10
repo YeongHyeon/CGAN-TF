@@ -36,7 +36,7 @@ TensorFlow implementation of Conditional Generative Adversarial Nets (CGAN) with
 
 ### Test Procedure
 
-## From random noise without conditions
+#### From random noise without conditions
 <div align="center">
 
 |z:2|z:64|z:128|
@@ -45,7 +45,7 @@ TensorFlow implementation of Conditional Generative Adversarial Nets (CGAN) with
 
 </div>
 
-## From random noise with conditions
+#### From random noise with conditions
 <div align="center">
 
 |z:2|z:64|z:128|
@@ -54,7 +54,7 @@ TensorFlow implementation of Conditional Generative Adversarial Nets (CGAN) with
 
 </div>
 
-## Latent space walking with conditions
+#### Latent space walking with conditions
 <div align="center">
 
 |Class-0 (z:2)|Class-1 (z:2)|Class-2 (z:2)|Class-3 (z:2)|Class-4 (z:2)|
