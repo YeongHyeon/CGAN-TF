@@ -49,6 +49,28 @@ def save_img(contents, names=["", "", ""], savename=""):
     plt.savefig(savename)
     plt.close()
 
+def vectorized_condition(batch_size, num_condition):
+
+    unit = batch_size // num_condition
+    cond = np.zeros((batch_size, num_condition))
+    checker = 0
+    for idx_b in range(batch_size):
+        try: cond[idx_b, checker] = 1
+        except: pass
+        if(idx_b % unit == 0): checker += 1
+
+    return cond
+
+def vectorized_condition_oc(batch_size, num_condition, checker=0):
+
+    unit = batch_size // num_condition
+    cond = np.zeros((batch_size, num_condition))
+    for idx_b in range(batch_size):
+        try: cond[idx_b, checker] = 1
+        except: pass
+
+    return cond
+
 def random_noise(batch_size, zdim):
 
     return np.random.uniform(-1, 1, [batch_size, zdim]).astype(np.float32)
@@ -58,7 +80,7 @@ def training(neuralnet, dataset, epochs, batch_size, normalize=True):
     print("\nTraining to %d epochs (%d of minibatch size)" %(epochs, batch_size))
 
     make_dir(path="training")
-    result_list = ["from_noise"]
+    result_list = ["from_noise", "from_condition"]
     if(neuralnet.zdim == 2): result_list.append("latent_walk")
     for result_name in result_list: make_dir(path=os.path.join("training", result_name))
 
@@ -68,24 +90,27 @@ def training(neuralnet, dataset, epochs, batch_size, normalize=True):
     for epoch in range(epochs):
 
         x_tr, y_tr, _ = dataset.next_train(batch_size=test_size, fix=True) # Initial batch
+        y_tr = vectorized_condition(batch_size=test_size, num_condition=neuralnet.num_class)
         z_tr = random_noise(x_tr.shape[0], neuralnet.zdim)
         step_dict = neuralnet.step(x=x_tr, y=y_tr, z=z_tr, training=False)
         x_fake = step_dict['x_fake']
         plt.imsave(os.path.join("training", "from_noise", "%08d.png" %(epoch)), dat2canvas(data=x_fake))
 
         if(neuralnet.zdim == 2):
-            x_values = np.linspace(-3, 3, test_sq)
-            y_values = np.linspace(-3, 3, test_sq)
-            z_latents = None
-            for y_loc, y_val in enumerate(y_values):
-                for x_loc, x_val in enumerate(x_values):
-                    z_latent = np.reshape(np.array([y_val, x_val]), (1, neuralnet.zdim))
-                    if(z_latents is None): z_latents = z_latent
-                    else: z_latents = np.append(z_latents, z_latent, axis=0)
-            step_dict = neuralnet.step(x=x_tr, y=y_tr, z=z_latents, training=False)
-            x_fake = step_dict['x_fake']
-            z_tr = random_noise(x_tr.shape[0], neuralnet.zdim)
-            plt.imsave(os.path.join("training", "latent_walk", "%08d.png" %(epoch)), dat2canvas(data=x_fake))
+            for checker in range(neuralnet.num_class):
+                x_values = np.linspace(-3, 3, test_sq)
+                y_values = np.linspace(-3, 3, test_sq)
+                z_latents = None
+                for y_loc, y_val in enumerate(y_values):
+                    for x_loc, x_val in enumerate(x_values):
+                        z_latent = np.reshape(np.array([y_val, x_val]), (1, neuralnet.zdim))
+                        if(z_latents is None): z_latents = z_latent
+                        else: z_latents = np.append(z_latents, z_latent, axis=0)
+                y_tr = vectorized_condition_oc(batch_size=test_size, num_condition=neuralnet.num_class, checker=checker)
+                step_dict = neuralnet.step(x=x_tr, y=y_tr, z=z_latents, training=False)
+                x_fake = step_dict['x_fake']
+                z_tr = random_noise(x_tr.shape[0], neuralnet.zdim)
+                plt.imsave(os.path.join("training", "latent_walk", "%08d_%02d.png" %(epoch, checker)), dat2canvas(data=x_fake))
 
 
         while(True):
@@ -112,6 +137,7 @@ def test(neuralnet, dataset, batch_size):
 
     for i in range(10):
         x_te, y_te, _ = dataset.next_test(batch_size=test_size)
+        y_te = vectorized_condition(batch_size=test_size, num_condition=neuralnet.num_class)
         z_te = random_noise(test_size, neuralnet.zdim)
         step_dict = neuralnet.step(x=x_te, y=y_te, z=z_te, training=False)
         x_fake = step_dict['x_fake']
