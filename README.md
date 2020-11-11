@@ -67,30 +67,6 @@ TensorFlow implementation of Conditional Generative Adversarial Nets (CGAN) with
 
 </div>
 
-<div align="center">
-
-|Class-0 (z:64)|Class-1 (z:64)|Class-2 (z:64)|Class-3 (z:64)|Class-4 (z:64)|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="./figures/z64_0.png" width="150">|<img src="./figures/z64_1.png" width="150">|<img src="./figures/z64_2.png" width="150">|<img src="./figures/z64_3.png" width="150">|<img src="./figures/z64_4.png" width="150">|
-
-|Class-5 (z:64)|Class-6 (z:64)|Class-7 (z:64)|Class-8 (z:64)|Class-9 (z:64)|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="./figures/z64_5.png" width="150">|<img src="./figures/z64_6.png" width="150">|<img src="./figures/z64_7.png" width="150">|<img src="./figures/z64_8.png" width="150">|<img src="./figures/z64_9.png" width="150">|
-
-</div>
-
-<div align="center">
-
-|Class-0 (z:128)|Class-1 (z:128)|Class-2 (z:128)|Class-3 (z:128)|Class-4 (z:128)|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="./figures/z128_0.png" width="150">|<img src="./figures/z128_1.png" width="150">|<img src="./figures/z128_2.png" width="150">|<img src="./figures/z128_3.png" width="150">|<img src="./figures/z128_4.png" width="150">|
-
-|Class-5 (z:128)|Class-6 (z:128)|Class-7 (z:128)|Class-8 (z:128)|Class-9 (z:128)|
-|:---:|:---:|:---:|:---:|:---:|
-|<img src="./figures/z128_5.png" width="150">|<img src="./figures/z128_6.png" width="150">|<img src="./figures/z128_7.png" width="150">|<img src="./figures/z128_8.png" width="150">|<img src="./figures/z128_9.png" width="150">|
-
-</div>
-
 ## Environment
 * Python 3.7.4  
 * Tensorflow 1.14.0  
