@@ -11,7 +11,7 @@ TensorFlow implementation of Conditional Generative Adversarial Nets (CGAN) with
   <p>The algorithm for training CGAN [1].</p>
 </div>
 
-### GAN architecture
+### CGAN architecture
 <div align="center">
   <img src="./figures/cgan.png" width="500">  
   <p>The architecture of CGAN [1].</p>
